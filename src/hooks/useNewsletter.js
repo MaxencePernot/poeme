@@ -18,6 +18,9 @@ export const newsletterApi = {
     return { error };
   },
   remove: (id) => supabase.from('newsletter_subscribers').delete().eq('id', id),
+  // Désinscription d'un utilisateur connecté (par son e-mail).
+  unsubscribe: (email) =>
+    supabase.from('newsletter_subscribers').delete().eq('email', (email || '').trim().toLowerCase()),
 };
 
 // Liste des abonnés — réservée à l'administration (RLS).

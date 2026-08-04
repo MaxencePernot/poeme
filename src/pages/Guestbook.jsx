@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useGuestbook, guestbookApi } from '../hooks/useGuestbook';
 import { useAuth } from '../context/AuthContext';
 import { formatDate } from '../lib/utils';
@@ -89,22 +90,44 @@ function Entry({ entry, isAdmin, onChange }) {
   );
 }
 
-// Formulaire de contribution (avec honeypot anti-spam).
+// Formulaire de contribution (réservé aux personnes connectées).
 function GuestbookForm({ onDone }) {
-  const [name, setName] = useState('');
+  const { user, profile } = useAuth();
   const [body, setBody] = useState('');
   const [website, setWebsite] = useState('');
   const [sending, setSending] = useState(false);
   const toast = useToast();
 
+  const authorName =
+    profile?.display_name?.trim() || user?.email?.split('@')[0] || 'Plume invitée';
+
+  if (!user) {
+    return (
+      <div className="card p-6 text-center">
+        <p className="text-sm text-ink-soft">
+          Pour partager votre écrit, connectez-vous ou créez un compte.
+        </p>
+        <div className="mt-3 flex justify-center gap-2">
+          <Link to="/connexion" className="btn-primary !py-2">Se connecter</Link>
+          <Link to="/inscription" className="btn-outline !py-2">Créer un compte</Link>
+        </div>
+      </div>
+    );
+  }
+
   const submit = async (e) => {
     e.preventDefault();
     setSending(true);
-    const { error } = await guestbookApi.add({ authorName: name, body, honeypot: website });
+    const { error } = await guestbookApi.add({
+      userId: user.id,
+      authorName,
+      body,
+      honeypot: website,
+    });
     setSending(false);
     if (error) return toast(error.message, 'error');
-    setName(''); setBody('');
-    toast('Merci pour votre message !', 'success');
+    setBody('');
+    toast('Merci pour votre partage !', 'success');
     onDone?.();
   };
 
@@ -115,10 +138,9 @@ function GuestbookForm({ onDone }) {
         value={website} onChange={(e) => setWebsite(e.target.value)}
         className="absolute left-[-9999px] h-0 w-0 opacity-0" aria-hidden="true"
       />
-      <input
-        className="field" placeholder="Votre nom" value={name} maxLength={60} required
-        onChange={(e) => setName(e.target.value)}
-      />
+      <p className="text-xs text-ink-soft">
+        Vous partagez en tant que <span className="font-medium text-ink">{authorName}</span>.
+      </p>
       <textarea
         className="field min-h-[120px] resize-y"
         placeholder="Partagez un poème, un texte, une réflexion, une inspiration…"

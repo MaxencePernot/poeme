@@ -23,8 +23,8 @@ export default function Footer() {
           <ul className="space-y-2 text-ink-soft">
             <li><Link className="link-underline" to="/poemes">Mes poèmes</Link></li>
             <li><Link className="link-underline" to="/galerie">Galerie</Link></li>
-            <li><Link className="link-underline" to="/lectures">Lectures</Link></li>
-            <li><Link className="link-underline" to="/livres">Livres</Link></li>
+            <li><Link className="link-underline" to="/lectures">Mes lectures</Link></li>
+            <li><Link className="link-underline" to="/livres">Livres publiés</Link></li>
             <li><Link className="link-underline" to="/les-plumes-invitees">Les Plumes Invitées</Link></li>
             <li><Link className="link-underline" to="/a-propos">À propos</Link></li>
           </ul>

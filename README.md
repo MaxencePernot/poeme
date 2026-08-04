@@ -197,3 +197,39 @@ Cette version ajoute quatre nouveautés. **Une seule action est requise de votre
 - **Livres publiés** (`/livres`) : votre livre et vos recommandations, avec bouton « Acheter ». Votre livre peut être épinglé (« à l'honneur »). Gérés depuis **Admin → Livres publiés**.
 - **Les Plumes Invitées** : l'ancien « Livre d'or », renommé et rouvert comme espace d'écriture partagée. L'ancienne adresse `/livre-d-or` redirige vers la nouvelle.
 - **Newsletter** : un champ d'inscription dans le pied de page **collecte les adresses e-mail**. Vous les consultez et les exportez (CSV, ou copie en un clic) depuis **Admin → Abonnés**. L'envoi des lettres se fait avec l'outil de votre choix — le site ne fait que rassembler les adresses.
+
+---
+
+## 🆕 Mise à jour — Vague 3 (Comptes utilisateurs)
+
+Les visiteurs peuvent désormais **créer un compte** (e-mail + mot de passe) pour commenter et partager dans « Les Plumes Invitées ». Les commentaires anonymes ne sont plus possibles, ce qui limite le spam.
+
+### ⚠️ Changement de sécurité important
+Jusqu'ici, « être administrateur » revenait à « être connecté ». Comme n'importe qui peut maintenant s'inscrire, ce raccourci deviendrait dangereux. La migration ci-dessous **redéfinit l'admin** : vous êtes reconnue via une liste privée d'administrateurs, et le script **vous y ajoute automatiquement** (car vous êtes le seul compte existant au moment où vous l'exécutez).
+
+### À faire, DANS CET ORDRE
+1. **D'abord, la base.** Supabase → SQL Editor → New query → collez tout `supabase/migrations/003_comptes.sql` → **Run**.
+   Ce script crée les profils, la sécurité admin, et vous promeut administratrice. Exécutez-le **avant** d'ouvrir les inscriptions.
+2. **Réactivez les inscriptions.** Authentication → Providers (ou Sign In) → **Email** → activez **« Allow new users to sign up »** (l'inverse de ce qu'on avait fait au tout début).
+3. **Configurez les URL de redirection** (indispensable pour la réinitialisation de mot de passe et la confirmation d'e-mail). Authentication → **URL Configuration** :
+   - **Site URL** : `https://rachelentrelignes.netlify.app`
+   - **Redirect URLs** : ajoutez `https://rachelentrelignes.netlify.app/**`
+4. **Déployez les fichiers** du site sur GitHub (Netlify redéploie).
+
+> Faites l'étape 1 **avant** de mettre le nouveau site en ligne : la reconnaissance de l'administratrice dépend de cette migration. Tant que vous ne l'avez pas lancée, le nouvel espace admin ne vous reconnaîtra pas. (Votre site actuel reste en ligne tant que vous n'avez pas envoyé les nouveaux fichiers, donc rien ne presse.)
+
+### Confirmation d'e-mail (facultatif)
+Pour exiger une vérification de l'adresse à l'inscription : Authentication → Providers → Email → activez **« Confirm email »**. Notez que l'envoi d'e-mails de Supabase est **limité** en usage gratuit ; pour un vrai trafic, configurez un fournisseur SMTP (Authentication → Emails/SMTP) — par exemple Brevo, gratuit. Sans confirmation activée, les comptes sont utilisables immédiatement.
+
+### Ajouter un autre administrateur (si besoin, plus tard)
+Dans SQL Editor :
+```sql
+insert into public.admins (user_id)
+select id from auth.users where email = 'adresse@exemple.com';
+```
+
+### Les pages de compte
+- `/inscription` — créer un compte (avec option newsletter)
+- `/connexion` — se connecter (les visiteurs vont vers leur profil, vous vers l'admin)
+- `/mot-de-passe-oublie` puis `/reinitialiser-mot-de-passe` — réinitialisation
+- `/profil` — nom affiché, préférence newsletter, changement de mot de passe, déconnexion

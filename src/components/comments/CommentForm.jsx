@@ -1,17 +1,42 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { commentsApi } from '../../hooks/useComments';
+import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../ui/Toast';
 import Icon from '../ui/Icon';
 
+// Nom affiché : celui du profil, sinon la partie locale de l'e-mail.
+function displayNameOf(user, profile) {
+  return (
+    profile?.display_name?.trim() ||
+    user?.email?.split('@')[0] ||
+    'Lecteur·rice'
+  );
+}
+
 // Formulaire d'ajout de commentaire (ou de réponse).
-// Sécurité : champ « website » invisible servant de piège à robots (honeypot),
-// validation de longueur, détection de spam côté client + RLS côté serveur.
+// Réservé aux personnes connectées : réduit le spam et responsabilise.
 export default function CommentForm({ postId, parentId = null, onDone, compact = false }) {
-  const [name, setName] = useState('');
+  const { user, profile } = useAuth();
   const [body, setBody] = useState('');
   const [website, setWebsite] = useState(''); // honeypot
   const [sending, setSending] = useState(false);
   const toast = useToast();
+
+  // Invite à se connecter si l'utilisateur n'a pas de compte.
+  if (!user) {
+    return (
+      <div className="rounded-2xl border border-lilac-100 bg-white/50 p-5 text-center">
+        <p className="text-sm text-ink-soft">
+          Pour laisser un commentaire, connectez-vous ou créez un compte.
+        </p>
+        <div className="mt-3 flex justify-center gap-2">
+          <Link to="/connexion" className="btn-primary !py-2">Se connecter</Link>
+          <Link to="/inscription" className="btn-outline !py-2">Créer un compte</Link>
+        </div>
+      </div>
+    );
+  }
 
   const submit = async (e) => {
     e.preventDefault();
@@ -21,7 +46,8 @@ export default function CommentForm({ postId, parentId = null, onDone, compact =
     const { error } = await commentsApi.add({
       postId,
       parentId,
-      authorName: name,
+      userId: user.id,
+      authorName: displayNameOf(user, profile),
       body,
       honeypot: website,
     });
@@ -31,7 +57,6 @@ export default function CommentForm({ postId, parentId = null, onDone, compact =
       toast(error.message, 'error');
       return;
     }
-    setName('');
     setBody('');
     toast('Merci, votre commentaire est publié.', 'success');
     onDone?.();
@@ -39,27 +64,16 @@ export default function CommentForm({ postId, parentId = null, onDone, compact =
 
   return (
     <form onSubmit={submit} className={compact ? 'space-y-2' : 'space-y-3'}>
-      {/* Piège anti-robot : caché aux humains, ignoré par les lecteurs d'écran. */}
+      {/* Piège anti-robot */}
       <input
-        type="text"
-        name="website"
-        tabIndex={-1}
-        autoComplete="off"
-        value={website}
-        onChange={(e) => setWebsite(e.target.value)}
-        className="absolute left-[-9999px] h-0 w-0 opacity-0"
-        aria-hidden="true"
+        type="text" name="website" tabIndex={-1} autoComplete="off"
+        value={website} onChange={(e) => setWebsite(e.target.value)}
+        className="absolute left-[-9999px] h-0 w-0 opacity-0" aria-hidden="true"
       />
 
-      <input
-        type="text"
-        className="field"
-        placeholder="Votre nom"
-        value={name}
-        maxLength={60}
-        required
-        onChange={(e) => setName(e.target.value)}
-      />
+      <p className="text-xs text-ink-soft">
+        Vous commentez en tant que <span className="font-medium text-ink">{displayNameOf(user, profile)}</span>.
+      </p>
       <textarea
         className="field min-h-[90px] resize-y"
         placeholder={parentId ? 'Votre réponse…' : 'Laissez un mot, une pensée…'}
@@ -72,9 +86,7 @@ export default function CommentForm({ postId, parentId = null, onDone, compact =
         <span className="text-xs text-ink-soft/60">{body.length}/2000</span>
         <div className="flex gap-2">
           {onDone && parentId && (
-            <button type="button" onClick={onDone} className="btn-ghost">
-              Annuler
-            </button>
+            <button type="button" onClick={onDone} className="btn-ghost">Annuler</button>
           )}
           <button type="submit" disabled={sending} className="btn-primary">
             <Icon name="feather" size={16} />

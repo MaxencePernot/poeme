@@ -7,8 +7,8 @@ const links = [
   { to: '/', label: 'Accueil', end: true },
   { to: '/poemes', label: 'Mes poèmes' },
   { to: '/galerie', label: 'Galerie' },
-  { to: '/lectures', label: 'Lectures' },
-  { to: '/livres', label: 'Livres' },
+  { to: '/lectures', label: 'Mes lectures' },
+  { to: '/livres', label: 'Livres publiés' },
   { to: '/les-plumes-invitees', label: 'Les Plumes Invitées' },
   { to: '/a-propos', label: 'À propos' },
 ];
@@ -16,7 +16,7 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { isAdmin } = useAuth();
+  const { user, isAdmin } = useAuth();
   const location = useLocation();
 
   // Fond de la barre plus opaque une fois la page défilée.
@@ -61,14 +61,27 @@ export default function Navbar() {
               {l.label}
             </NavLink>
           ))}
-          {/* Accès administrateur, très discret */}
-          <Link
-            to={isAdmin ? '/admin' : '/connexion'}
-            title={isAdmin ? 'Tableau de bord' : 'Espace administrateur'}
-            className="text-ink-soft/40 transition-colors hover:text-lilac-400"
-          >
-            <Icon name={isAdmin ? 'edit' : 'lock'} size={16} />
-          </Link>
+          {/* Compte */}
+          {user ? (
+            <div className="flex items-center gap-4">
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  title="Tableau de bord"
+                  className="text-ink-soft/50 transition-colors hover:text-lilac-400"
+                >
+                  <Icon name="edit" size={16} />
+                </Link>
+              )}
+              <Link to="/profil" className="flex items-center gap-1.5 text-sm text-ink-soft hover:text-lilac-500">
+                <Icon name="feather" size={15} /> Mon compte
+              </Link>
+            </div>
+          ) : (
+            <Link to="/connexion" className="btn-outline !py-1.5 text-sm">
+              Se connecter
+            </Link>
+          )}
         </div>
 
         {/* Bouton menu — mobile */}
@@ -101,13 +114,22 @@ export default function Navbar() {
                 {l.label}
               </NavLink>
             ))}
-            <Link
-              to={isAdmin ? '/admin' : '/connexion'}
-              className="mt-2 flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-ink-soft"
-            >
-              <Icon name="lock" size={16} />
-              {isAdmin ? 'Tableau de bord' : 'Espace administrateur'}
-            </Link>
+            {user ? (
+              <>
+                <Link to="/profil" className="mt-2 flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-ink-soft">
+                  <Icon name="feather" size={16} /> Mon compte
+                </Link>
+                {isAdmin && (
+                  <Link to="/admin" className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-ink-soft">
+                    <Icon name="edit" size={16} /> Tableau de bord
+                  </Link>
+                )}
+              </>
+            ) : (
+              <Link to="/connexion" className="mt-2 flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-ink-soft">
+                <Icon name="lock" size={16} /> Se connecter
+              </Link>
+            )}
           </div>
         </div>
       )}

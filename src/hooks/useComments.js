@@ -48,10 +48,11 @@ function buildTree(flat) {
 
 // ── Actions ────────────────────────────────────────────────────────────
 export const commentsApi = {
-  // Ajout par un visiteur. Le champ « website » est un piège anti-robot
-  // (honeypot) : rempli seulement par les bots, il fait échouer l'envoi.
-  add: async ({ postId, parentId = null, authorName, body, honeypot = '' }) => {
+  // Ajout par un utilisateur connecté. On enregistre son identifiant (user_id)
+  // et son nom affiché. Le honeypot reste un garde-fou anti-robot.
+  add: async ({ postId, parentId = null, userId, authorName, body, honeypot = '' }) => {
     if (honeypot) return { error: { message: 'Envoi refusé.' } };
+    if (!userId) return { error: { message: 'Vous devez être connecté·e pour commenter.' } };
     if (!authorName?.trim() || !body?.trim())
       return { error: { message: 'Nom et message requis.' } };
     if (looksLikeSpam(body))
@@ -62,6 +63,7 @@ export const commentsApi = {
       .insert({
         post_id: postId,
         parent_id: parentId,
+        user_id: userId,
         author_name: authorName.trim().slice(0, 60),
         body: body.trim().slice(0, 2000),
       })

@@ -13,14 +13,14 @@ export default function Readings() {
   return (
     <div className="mx-auto max-w-5xl px-5 py-16">
       <Seo
-        title="Lectures"
+        title="Mes lectures"
         path="/lectures"
         description="Les livres que j'ai lus, aimés et que je vous recommande."
       />
 
       <PageHeader
         eyebrow="Bibliothèque"
-        title="Lectures"
+        title="Mes lectures"
         subtitle="Les livres qui m'ont marquée, avec mes impressions et quelques passages choisis."
       />
 

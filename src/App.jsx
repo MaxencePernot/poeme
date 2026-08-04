@@ -16,6 +16,10 @@ import Readings from './pages/Readings';
 import Books from './pages/Books';
 import Guestbook from './pages/Guestbook';
 import Login from './pages/Login';
+import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 
 // « À propos » et l'administration sont chargées à la demande : elles
@@ -62,6 +66,10 @@ export default function App() {
             <Route path="/livre-d-or" element={<Guestbook />} />
             <Route path="/a-propos" element={<About />} />
             <Route path="/connexion" element={<Login />} />
+            <Route path="/inscription" element={<Register />} />
+            <Route path="/mot-de-passe-oublie" element={<ForgotPassword />} />
+            <Route path="/reinitialiser-mot-de-passe" element={<ResetPassword />} />
+            <Route path="/profil" element={<Profile />} />
 
             {/* Administration (protégée) */}
             <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

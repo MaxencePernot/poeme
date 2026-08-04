@@ -13,14 +13,14 @@ export default function Books() {
   return (
     <div className="mx-auto max-w-6xl px-5 py-16">
       <Seo
-        title="Livres"
+        title="Livres publiés"
         path="/livres"
         description="Mon livre et une sélection d'ouvrages à découvrir et à soutenir."
       />
 
       <PageHeader
         eyebrow="À découvrir"
-        title="Livres"
+        title="Livres publiés"
         subtitle="Mon livre et quelques ouvrages que j'ai à cœur de vous faire connaître."
       />
 
