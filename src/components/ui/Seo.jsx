@@ -6,7 +6,7 @@ const BASE = 'https://rachelentrelignes.netlify.app';
 // Gère les balises <title>, description, canonical et Open Graph par page.
 export default function Seo({
   title,
-  description = 'Un espace personnel de poésie et de photographie.',
+  description = 'Un espace personnel de poésie, de lecture et de photographie.',
   path = '/',
   image = '/og-image.svg',
   type = 'website',

@@ -2,7 +2,7 @@
   "name": "rachel-entre-lignes",
   "private": true,
   "version": "1.0.0",
-  "description": "Rachel entre lignes — espace personnel de poésie et de photographie.",
+  "description": "Rachel entre lignes — espace personnel de poésie, de lecture et de photographie.",
   "type": "module",
   "scripts": {
     "dev": "vite",

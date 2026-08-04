@@ -12,6 +12,8 @@ import Home from './pages/Home';
 import Poems from './pages/Poems';
 import PoemDetail from './pages/PoemDetail';
 import Gallery from './pages/Gallery';
+import Readings from './pages/Readings';
+import Books from './pages/Books';
 import Guestbook from './pages/Guestbook';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
@@ -24,6 +26,13 @@ const AdminPosts = lazy(() => import('./pages/admin/Posts'));
 const PostNew = lazy(() => import('./pages/admin/PostNew'));
 const PostEdit = lazy(() => import('./pages/admin/PostEdit'));
 const AdminComments = lazy(() => import('./pages/admin/Comments'));
+const AdminReadings = lazy(() => import('./pages/admin/Readings'));
+const ReadingNew = lazy(() => import('./pages/admin/ReadingNew'));
+const ReadingEdit = lazy(() => import('./pages/admin/ReadingEdit'));
+const AdminBooks = lazy(() => import('./pages/admin/Books'));
+const BookNew = lazy(() => import('./pages/admin/BookNew'));
+const BookEdit = lazy(() => import('./pages/admin/BookEdit'));
+const AdminSubscribers = lazy(() => import('./pages/admin/Subscribers'));
 
 export default function App() {
   // Si le fichier .env n'est pas configuré, on guide plutôt que d'afficher
@@ -46,6 +55,10 @@ export default function App() {
             <Route path="/poemes" element={<Poems />} />
             <Route path="/poeme/:slug" element={<PoemDetail />} />
             <Route path="/galerie" element={<Gallery />} />
+            <Route path="/lectures" element={<Readings />} />
+            <Route path="/livres" element={<Books />} />
+            <Route path="/les-plumes-invitees" element={<Guestbook />} />
+            {/* Ancienne adresse conservée pour ne pas casser les liens existants */}
             <Route path="/livre-d-or" element={<Guestbook />} />
             <Route path="/a-propos" element={<About />} />
             <Route path="/connexion" element={<Login />} />
@@ -56,6 +69,13 @@ export default function App() {
             <Route path="/admin/publications/nouvelle" element={<ProtectedRoute><PostNew /></ProtectedRoute>} />
             <Route path="/admin/publications/:id" element={<ProtectedRoute><PostEdit /></ProtectedRoute>} />
             <Route path="/admin/commentaires" element={<ProtectedRoute><AdminComments /></ProtectedRoute>} />
+            <Route path="/admin/lectures" element={<ProtectedRoute><AdminReadings /></ProtectedRoute>} />
+            <Route path="/admin/lectures/nouvelle" element={<ProtectedRoute><ReadingNew /></ProtectedRoute>} />
+            <Route path="/admin/lectures/:id" element={<ProtectedRoute><ReadingEdit /></ProtectedRoute>} />
+            <Route path="/admin/livres" element={<ProtectedRoute><AdminBooks /></ProtectedRoute>} />
+            <Route path="/admin/livres/nouveau" element={<ProtectedRoute><BookNew /></ProtectedRoute>} />
+            <Route path="/admin/livres/:id" element={<ProtectedRoute><BookEdit /></ProtectedRoute>} />
+            <Route path="/admin/abonnes" element={<ProtectedRoute><AdminSubscribers /></ProtectedRoute>} />
 
             {/* 404 */}
             <Route path="*" element={<NotFound />} />

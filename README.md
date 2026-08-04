@@ -1,6 +1,6 @@
 # Rachel entre lignes ✒️
 
-Un site personnel de **poésie et de photographie** : élégant, minimaliste,
+Un site personnel de **poésie, de lecture et de photographie** : élégant, minimaliste,
 apaisant. Construit avec **React + Vite + Tailwind CSS + Supabase**, prêt à
 déployer sur **Netlify**.
 
@@ -180,3 +180,20 @@ rachel-entre-lignes/
 ## 📄 Licence
 
 Projet personnel — adaptez-le librement à vos poèmes et à votre lumière.
+
+---
+
+## 🆕 Mise à jour — Vague 2 (Lectures, Livres, Plumes Invitées, Newsletter)
+
+Cette version ajoute quatre nouveautés. **Une seule action est requise de votre côté** : exécuter le script SQL de migration (les tables n'existent pas encore dans votre base).
+
+### À faire une fois dans Supabase
+1. Ouvrez **Supabase → SQL Editor → New query**.
+2. Copiez tout le contenu de `supabase/migrations/002_vague2.sql`, collez-le, cliquez **Run**.
+   Ce script est **additif** : il ne touche pas à vos données existantes. Il crée les tables `readings` (Lectures), `books` (Livres) et `newsletter_subscribers` (Abonnés), avec leurs règles de sécurité.
+
+### Ce que ça apporte
+- **Lectures** (`/lectures`) : fiches de livres lus, avec couverture, note en étoiles, avis et citations. Gérées depuis **Admin → Lectures**.
+- **Livres publiés** (`/livres`) : votre livre et vos recommandations, avec bouton « Acheter ». Votre livre peut être épinglé (« à l'honneur »). Gérés depuis **Admin → Livres publiés**.
+- **Les Plumes Invitées** : l'ancien « Livre d'or », renommé et rouvert comme espace d'écriture partagée. L'ancienne adresse `/livre-d-or` redirige vers la nouvelle.
+- **Newsletter** : un champ d'inscription dans le pied de page **collecte les adresses e-mail**. Vous les consultez et les exportez (CSV, ou copie en un clic) depuis **Admin → Abonnés**. L'envoi des lettres se fait avec l'outil de votre choix — le site ne fait que rassembler les adresses.

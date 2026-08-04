@@ -6,8 +6,11 @@ const nav = [
   { to: '/admin', label: 'Tableau de bord', icon: 'feather', end: true },
   { to: '/admin/publications', label: 'Publications', icon: 'edit' },
   { to: '/admin/publications/nouvelle', label: 'Nouvelle publication', icon: 'plus' },
+  { to: '/admin/lectures', label: 'Lectures', icon: 'book' },
+  { to: '/admin/livres', label: 'Livres publiés', icon: 'cart' },
   { to: '/admin/commentaires', label: 'Commentaires', icon: 'reply' },
-  { to: '/livre-d-or', label: "Livre d'or", icon: 'image' },
+  { to: '/admin/abonnes', label: 'Abonnés', icon: 'mail' },
+  { to: '/les-plumes-invitees', label: 'Les Plumes Invitées', icon: 'image' },
   { to: '/a-propos', label: 'Page À propos', icon: 'tag' },
 ];
 

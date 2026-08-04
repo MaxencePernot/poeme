@@ -20,18 +20,24 @@ export default function Dashboard() {
       supabase.from('comments').select('id', { count: 'exact', head: true }),
       supabase.from('guestbook').select('id', { count: 'exact', head: true }),
       supabase.from('post_likes').select('post_id', { count: 'exact', head: true }),
+      supabase.from('readings').select('id', { count: 'exact', head: true }),
+      supabase.from('books').select('id', { count: 'exact', head: true }),
+      supabase.from('newsletter_subscribers').select('id', { count: 'exact', head: true }),
       supabase
         .from('comments')
         .select('id, author_name, body, created_at, hidden, post_id')
         .order('created_at', { ascending: false })
         .limit(6),
-    ]).then(([posts, drafts, comments, guestbook, likes, latest]) => {
+    ]).then(([posts, drafts, comments, guestbook, likes, readings, books, subs, latest]) => {
       setStats({
         posts: posts.count || 0,
         drafts: drafts.count || 0,
         comments: comments.count || 0,
         guestbook: guestbook.count || 0,
         likes: likes.count || 0,
+        readings: readings.count || 0,
+        books: books.count || 0,
+        subscribers: subs.count || 0,
       });
       setRecent(latest.data || []);
       setLoading(false);
@@ -41,8 +47,11 @@ export default function Dashboard() {
   const cards = [
     { label: 'Publications', value: stats?.posts, icon: 'feather', to: '/admin/publications' },
     { label: 'Brouillons', value: stats?.drafts, icon: 'edit', to: '/admin/publications' },
+    { label: 'Lectures', value: stats?.readings, icon: 'book', to: '/admin/lectures' },
+    { label: 'Livres', value: stats?.books, icon: 'cart', to: '/admin/livres' },
     { label: 'Commentaires', value: stats?.comments, icon: 'reply', to: '/admin/commentaires' },
-    { label: "Livre d'or", value: stats?.guestbook, icon: 'image', to: '/livre-d-or' },
+    { label: 'Les Plumes', value: stats?.guestbook, icon: 'image', to: '/les-plumes-invitees' },
+    { label: 'Abonnés', value: stats?.subscribers, icon: 'mail', to: '/admin/abonnes' },
     { label: "J'aime", value: stats?.likes, icon: 'heart', to: '/admin/publications' },
   ];
 

@@ -21,6 +21,12 @@ const paths = {
   check: 'M4 12l5 5L20 6',
   plus: 'M12 5v14M5 12h14',
   logout: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9',
+  star: 'M12 3.5l2.6 5.6 6 .7-4.5 4.1 1.2 5.9L12 16.9 6.7 19.8l1.2-5.9L3.4 9.8l6-.7z',
+  book: 'M12 6C10 4.3 6.5 4.3 3.5 5.2v13C6.5 17.3 10 17.3 12 19c2-1.7 5.5-1.7 8.5-.8v-13C17.5 4.3 14 4.3 12 6zM12 6v13',
+  mail: 'M3 6h18v12H3zM3 7l9 6 9-6',
+  external: 'M14 4h6v6M20 4l-9 9M10 5H5a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1v-5',
+  download: 'M12 3v12M7 10l5 5 5-5M4 21h16',
+  cart: 'M4 5h2l2 11h9l2-8H7M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z',
 };
 
 export default function Icon({ name, size = 20, filled = false, className = '', ...rest }) {

@@ -21,7 +21,7 @@ export function usePosts({
 
     let query = supabase
       .from('posts')
-      .select('*', { count: 'exact' })
+      .select('*, post_likes(count)', { count: 'exact' })
       .order('pinned', { ascending: false })
       .order('created_at', { ascending: false });
 
@@ -39,7 +39,12 @@ export function usePosts({
     const { data, error: err, count } = await query;
     if (err) setError(err.message);
     else {
-      setPosts(data || []);
+      // Remplace le compteur dénormalisé par le vrai total issu de la relation.
+      const rows = (data || []).map((p) => ({
+        ...p,
+        likes_count: p.post_likes?.[0]?.count ?? p.likes_count ?? 0,
+      }));
+      setPosts(rows);
       setTotal(count || 0);
     }
     setLoading(false);

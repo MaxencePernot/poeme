@@ -10,7 +10,7 @@ import EmptyState from '../components/ui/EmptyState';
 import Icon from '../components/ui/Icon';
 import { useToast } from '../components/ui/Toast';
 
-// Carte d'une entrée du livre d'or, avec outils de modération pour l'admin.
+// Carte d'une contribution (Les Plumes Invitées), avec modération admin.
 function Entry({ entry, isAdmin, onChange }) {
   const toast = useToast();
   const [editing, setEditing] = useState(false);
@@ -89,7 +89,7 @@ function Entry({ entry, isAdmin, onChange }) {
   );
 }
 
-// Formulaire d'ajout au livre d'or (avec honeypot anti-spam).
+// Formulaire de contribution (avec honeypot anti-spam).
 function GuestbookForm({ onDone }) {
   const [name, setName] = useState('');
   const [body, setBody] = useState('');
@@ -121,7 +121,7 @@ function GuestbookForm({ onDone }) {
       />
       <textarea
         className="field min-h-[120px] resize-y"
-        placeholder="Un message, un poème, une pensée, un témoignage…"
+        placeholder="Partagez un poème, un texte, une réflexion, une inspiration…"
         value={body} maxLength={3000} required
         onChange={(e) => setBody(e.target.value)}
       />
@@ -129,7 +129,7 @@ function GuestbookForm({ onDone }) {
         <span className="text-xs text-ink-soft/60">{body.length}/3000</span>
         <button type="submit" disabled={sending} className="btn-primary">
           <Icon name="feather" size={16} />
-          {sending ? 'Envoi…' : 'Signer le livre d\'or'}
+          {sending ? 'Envoi…' : 'Partager mon écrit'}
         </button>
       </div>
     </form>
@@ -144,15 +144,15 @@ export default function Guestbook() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-16">
       <Seo
-        title="Livre d'or"
-        path="/livre-d-or"
-        description="Laissez un mot, un poème, une pensée dans le livre d'or."
+        title="Les Plumes Invitées"
+        path="/les-plumes-invitees"
+        description="Un espace ouvert où les visiteurs partagent leurs poèmes, textes et inspirations."
       />
 
       <PageHeader
-        eyebrow="Vos mots"
-        title="Livre d'or"
-        subtitle="Un espace à vous : déposez un message, une pensée, un vers."
+        eyebrow="À vos plumes"
+        title="Les Plumes Invitées"
+        subtitle="Un espace ouvert : partagez vos poèmes, vos textes, vos réflexions et vos inspirations."
       />
 
       <div className="mt-10">
@@ -164,7 +164,7 @@ export default function Guestbook() {
           <Spinner />
         ) : visibleCount === 0 && !isAdmin ? (
           <EmptyState
-            title="Le livre d'or attend sa première signature"
+            title="Les Plumes Invitées attendent leur premier écrit"
             hint="Vous pourriez être la première personne à y écrire."
             icon="✎"
           />

@@ -19,7 +19,7 @@ function Hero({ quote }) {
         className="pointer-events-none absolute -top-32 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-gradient-to-br from-lilac-200/50 to-sage-200/40 blur-3xl animate-drift-slow"
       />
       <div className="relative mx-auto max-w-3xl px-5 pb-16 pt-20 text-center sm:pt-28">
-        <Reveal as="p" className="eyebrow mb-5">Poésie & Photographies</Reveal>
+        <Reveal as="p" className="eyebrow mb-5">Poésie, Lecture et Photographie</Reveal>
         <Reveal
           as="h1"
           delay={100}

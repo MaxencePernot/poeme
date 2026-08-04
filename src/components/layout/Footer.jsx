@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Icon from '../ui/Icon';
+import NewsletterSignup from '../newsletter/NewsletterSignup';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -12,7 +13,7 @@ export default function Footer() {
             <span className="font-display text-lg italic">Rachel entre lignes</span>
           </div>
           <p className="mt-3 max-w-xs text-sm text-ink-soft">
-            Un carnet de poèmes et de photographies. Lisez lentement,
+            Un carnet de poèmes, de lectures et de photographies. Lisez lentement,
             respirez, laissez un mot si le cœur vous en dit.
           </p>
         </div>
@@ -22,16 +23,19 @@ export default function Footer() {
           <ul className="space-y-2 text-ink-soft">
             <li><Link className="link-underline" to="/poemes">Mes poèmes</Link></li>
             <li><Link className="link-underline" to="/galerie">Galerie</Link></li>
-            <li><Link className="link-underline" to="/livre-d-or">Livre d'or</Link></li>
+            <li><Link className="link-underline" to="/lectures">Lectures</Link></li>
+            <li><Link className="link-underline" to="/livres">Livres</Link></li>
+            <li><Link className="link-underline" to="/les-plumes-invitees">Les Plumes Invitées</Link></li>
             <li><Link className="link-underline" to="/a-propos">À propos</Link></li>
           </ul>
         </nav>
 
         <div className="text-sm">
-          <p className="eyebrow mb-3">Un mot doux</p>
-          <p className="text-ink-soft">
-            « Écrire, c'est une façon de parler sans être interrompu. »
+          <p className="eyebrow mb-3">Restons en lien</p>
+          <p className="mb-3 text-ink-soft">
+            Recevez de temps à autre des nouvelles, de nouveaux poèmes et lectures.
           </p>
+          <NewsletterSignup />
         </div>
       </div>
 

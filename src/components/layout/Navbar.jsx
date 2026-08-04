@@ -7,7 +7,9 @@ const links = [
   { to: '/', label: 'Accueil', end: true },
   { to: '/poemes', label: 'Mes poèmes' },
   { to: '/galerie', label: 'Galerie' },
-  { to: '/livre-d-or', label: "Livre d'or" },
+  { to: '/lectures', label: 'Lectures' },
+  { to: '/livres', label: 'Livres' },
+  { to: '/les-plumes-invitees', label: 'Les Plumes Invitées' },
   { to: '/a-propos', label: 'À propos' },
 ];
 

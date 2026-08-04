@@ -23,6 +23,19 @@ export default function ShareButtons({ title, url }) {
     }
   };
 
+  // Instagram n'autorise pas le partage d'un lien externe via une URL dédiée.
+  // On copie donc le lien et on ouvre Instagram : il ne reste qu'à le coller
+  // (dans une story, la bio, ou un message).
+  const shareInstagram = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      toast('Lien copié ! Collez-le dans votre story ou votre bio Instagram.', 'success');
+    } catch {
+      toast('Copiez le lien, puis collez-le dans Instagram.', 'info');
+    }
+    window.open('https://www.instagram.com', '_blank', 'noopener,noreferrer');
+  };
+
   // Utilise l'API de partage native du système quand elle existe (mobile).
   const nativeShare = async () => {
     if (navigator.share) {
@@ -50,6 +63,22 @@ export default function ShareButtons({ title, url }) {
           {t.label}
         </a>
       ))}
+      <button
+        type="button"
+        onClick={shareInstagram}
+        className="btn-outline !px-3 !py-1.5 text-xs"
+        title="Copier le lien et ouvrir Instagram"
+      >
+        Instagram
+      </button>
+      <button
+        type="button"
+        onClick={copy}
+        className="btn-outline !px-3 !py-1.5 text-xs"
+        title="Copier le lien"
+      >
+        Copier le lien
+      </button>
       <button type="button" onClick={nativeShare} className="btn-ghost !px-3 !py-1.5">
         <Icon name="share" size={16} />
       </button>

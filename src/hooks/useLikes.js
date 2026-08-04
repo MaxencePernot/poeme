@@ -11,21 +11,22 @@ export function usePostLike(post) {
   const visitorId = getVisitorId();
 
   useEffect(() => {
-    setCount(post?.likes_count ?? 0);
-  }, [post?.likes_count]);
-
-  useEffect(() => {
     let active = true;
     if (!post?.id) return;
+
+    // On lit le VRAI nombre de likes en base (source de vérité), plutôt que
+    // de dépendre uniquement de la colonne dénormalisée likes_count qui peut
+    // se désynchroniser. On vérifie aussi si le visiteur courant a déjà aimé.
     supabase
       .from('post_likes')
-      .select('post_id')
+      .select('visitor_id', { count: 'exact' })
       .eq('post_id', post.id)
-      .eq('visitor_id', visitorId)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (active) setLiked(Boolean(data));
+      .then(({ data, count: total }) => {
+        if (!active) return;
+        if (typeof total === 'number') setCount(total);
+        setLiked((data || []).some((r) => r.visitor_id === visitorId));
       });
+
     return () => {
       active = false;
     };
