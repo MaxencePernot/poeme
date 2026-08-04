@@ -1,8 +1,8 @@
 {
-  "name": "encre-et-lumiere",
+  "name": "rachel-entre-lignes",
   "private": true,
   "version": "1.0.0",
-  "description": "Encre & Lumière — espace personnel de poésie et de photographie.",
+  "description": "Rachel entre lignes — espace personnel de poésie et de photographie.",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -48,7 +48,7 @@ export default function Navbar() {
             <Icon name="feather" size={18} />
           </span>
           <span className="font-display text-lg italic tracking-tight text-ink">
-            Encre&nbsp;&amp;&nbsp;Lumière
+            Rachel&nbsp;entre&nbsp;lignes
           </span>
         </Link>
 

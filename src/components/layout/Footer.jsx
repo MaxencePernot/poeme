@@ -9,7 +9,7 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-2 text-ink">
             <Icon name="feather" size={18} className="text-lilac-400" />
-            <span className="font-display text-lg italic">Encre & Lumière</span>
+            <span className="font-display text-lg italic">Rachel entre lignes</span>
           </div>
           <p className="mt-3 max-w-xs text-sm text-ink-soft">
             Un carnet de poèmes et de photographies. Lisez lentement,
@@ -36,7 +36,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-lilac-100 py-5 text-center text-xs text-ink-soft/70">
-        © {year} Encre & Lumière — Tous droits réservés.
+        © {year} Rachel entre lignes — Tous droits réservés.
       </div>
     </footer>
   );

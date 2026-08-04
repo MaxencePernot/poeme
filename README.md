@@ -1,4 +1,4 @@
-# Encre & Lumière ✒️
+# Rachel entre lignes ✒️
 
 Un site personnel de **poésie et de photographie** : élégant, minimaliste,
 apaisant. Construit avec **React + Vite + Tailwind CSS + Supabase**, prêt à
@@ -111,7 +111,7 @@ npx netlify-cli deploy --prod --dir=dist
 ## 🗂️ Architecture
 
 ```
-encre-et-lumiere/
+rachel-entre-lignes/
 ├── index.html                 # Métadonnées SEO / Open Graph de base
 ├── netlify.toml               # Build, redirections SPA, en-têtes de sécurité
 ├── tailwind.config.js         # Palette, typographie, animations

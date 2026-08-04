@@ -3,4 +3,4 @@ Allow: /
 Disallow: /connexion
 Disallow: /admin
 
-Sitemap: https://encre-et-lumiere.netlify.app/sitemap.xml
+Sitemap: https://rachelentrelignes.netlify.app/sitemap.xml

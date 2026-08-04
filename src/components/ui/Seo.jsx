@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
-const SITE = 'Encre & Lumière';
-const BASE = 'https://encre-et-lumiere.netlify.app';
+const SITE = 'Rachel entre lignes';
+const BASE = 'https://rachelentrelignes.netlify.app';
 
 // Gère les balises <title>, description, canonical et Open Graph par page.
 export default function Seo({

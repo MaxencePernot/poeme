@@ -1,5 +1,5 @@
 -- ════════════════════════════════════════════════════════════════════
---  Encre & Lumière — Schéma de base de données Supabase
+--  Rachel entre lignes — Schéma de base de données Supabase
 --  À exécuter dans : Supabase Dashboard → SQL Editor → New query → Run
 --
 --  Modèle de sécurité :

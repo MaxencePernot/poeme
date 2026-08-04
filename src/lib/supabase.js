@@ -17,7 +17,7 @@ export const isSupabaseConfigured = Boolean(
 if (!isSupabaseConfigured && import.meta.env.DEV) {
   // eslint-disable-next-line no-console
   console.warn(
-    '[Encre & Lumière] Supabase n\'est pas configuré. ' +
+    '[Rachel entre lignes] Supabase n\'est pas configuré. ' +
       'Copiez .env.example en .env et renseignez vos clés.'
   );
 }
