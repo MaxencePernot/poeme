@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- SEO de base (surchargé page par page via react-helmet-async) -->
+    <title>Encre & Lumière — Poésie & Photographies</title>
+    <meta
+      name="description"
+      content="Un espace personnel de poésie et de photographie. Des textes à lire lentement, une lumière douce, une invitation à la rêverie."
+    />
+    <meta name="theme-color" content="#FBFAFF" />
+    <link rel="canonical" href="https://encre-et-lumiere.netlify.app/" />
+
+    <!-- Open Graph / réseaux sociaux -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Encre & Lumière" />
+    <meta property="og:title" content="Encre & Lumière — Poésie & Photographies" />
+    <meta
+      property="og:description"
+      content="Des textes à lire lentement, une lumière douce, une invitation à la rêverie."
+    />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Polices : préchargement puis chargement non bloquant -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      Ce site requiert JavaScript pour afficher les poèmes et la galerie.
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

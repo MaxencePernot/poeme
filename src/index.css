@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    /* Halo pastel très diffus en fond, immobile et discret. */
+    background-image:
+      radial-gradient(60rem 40rem at 8% -10%, rgba(201, 184, 232, 0.20), transparent 60%),
+      radial-gradient(50rem 40rem at 100% 0%, rgba(184, 216, 196, 0.18), transparent 55%);
+    background-attachment: fixed;
+  }
+  ::selection {
+    background: theme('colors.lilac.200');
+    color: theme('colors.ink');
+  }
+  :focus-visible {
+    outline: 2px solid theme('colors.lilac.400');
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  h1, h2, h3 {
+    @apply font-display text-ink;
+    text-wrap: balance;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Composants réutilisables
+   ───────────────────────────────────────────────────────────── */
+@layer components {
+  .eyebrow {
+    @apply font-sans text-xs uppercase tracking-eyebrow text-lilac-500;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+           px-5 py-2.5 text-sm font-medium transition-all duration-300
+           focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-ink text-paper hover:bg-lilac-500 shadow-soft
+           hover:shadow-lift hover:-translate-y-0.5;
+  }
+  .btn-ghost {
+    @apply btn text-ink-soft hover:text-ink hover:bg-lilac-50;
+  }
+  .btn-outline {
+    @apply btn border border-lilac-200 text-ink hover:border-lilac-300
+           hover:bg-lilac-50;
+  }
+
+  .card {
+    @apply rounded-2xl border border-lilac-100 bg-white/70 backdrop-blur-sm
+           shadow-soft transition-all duration-500;
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 hover:shadow-lift hover:border-lilac-200;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-lilac-200 bg-white/80 px-4 py-3
+           text-ink placeholder:text-ink-soft/50 transition-colors duration-200
+           focus:border-lilac-400 focus:outline-none focus:ring-2 focus:ring-lilac-200;
+  }
+
+  .link-underline {
+    @apply relative text-ink transition-colors hover:text-lilac-500;
+  }
+
+  /* Encadré « marge de manuscrit » : fin trait vertical lilas à gauche. */
+  .manuscript {
+    @apply relative pl-6;
+  }
+  .manuscript::before {
+    content: '';
+    @apply absolute left-0 top-1 bottom-1 w-px bg-gradient-to-b
+           from-lilac-200 via-lilac-300 to-sage-200;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Prose des poèmes (contenu HTML riche, rendu assaini)
+   ───────────────────────────────────────────────────────────── */
+.poem-prose {
+  @apply font-reader text-lg leading-relaxed text-ink/90;
+}
+.poem-prose p { @apply my-4; }
+.poem-prose h1 { @apply font-display text-3xl mt-8 mb-4; }
+.poem-prose h2 { @apply font-display text-2xl mt-6 mb-3; }
+.poem-prose h3 { @apply font-display text-xl mt-5 mb-2; }
+.poem-prose blockquote {
+  @apply my-6 border-l-2 border-lilac-300 pl-5 italic text-ink-soft;
+}
+.poem-prose ul { @apply list-disc pl-6 my-4; }
+.poem-prose ol { @apply list-decimal pl-6 my-4; }
+.poem-prose li { @apply my-1; }
+.poem-prose a { @apply text-lilac-500 underline decoration-lilac-200 underline-offset-2 hover:decoration-lilac-400; }
+.poem-prose img { @apply my-6 rounded-xl shadow-soft mx-auto; }
+.poem-prose u { text-decoration-color: theme('colors.lilac.300'); }
+.poem-prose s { @apply text-ink-soft; }
+
+/* ─────────────────────────────────────────────────────────────
+   Barre d'outils de l'éditeur (ProseMirror / TipTap)
+   ───────────────────────────────────────────────────────────── */
+.ProseMirror {
+  @apply min-h-[220px] px-4 py-3 font-reader text-lg leading-relaxed text-ink/90 focus:outline-none;
+}
+.ProseMirror p { @apply my-3; }
+.ProseMirror h1 { @apply font-display text-2xl my-3; }
+.ProseMirror h2 { @apply font-display text-xl my-2; }
+.ProseMirror h3 { @apply font-display text-lg my-2; }
+.ProseMirror blockquote { @apply my-3 border-l-2 border-lilac-300 pl-4 italic text-ink-soft; }
+.ProseMirror ul { @apply list-disc pl-6 my-3; }
+.ProseMirror ol { @apply list-decimal pl-6 my-3; }
+.ProseMirror a { @apply text-lilac-500 underline; }
+.ProseMirror img { @apply my-4 rounded-xl max-w-full; }
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  @apply text-ink-soft/40 float-left h-0 pointer-events-none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Révélation au défilement (piloté par IntersectionObserver)
+   ───────────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.reveal.is-visible {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Accessibilité : respect de « prefers-reduced-motion ». */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /connexion
+Disallow: /admin
+
+Sitemap: https://encre-et-lumiere.netlify.app/sitemap.xml

@@ -1,0 +1,33 @@
+# ─────────────────────────────────────────────────────────────
+#  Configuration de déploiement Netlify
+# ─────────────────────────────────────────────────────────────
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Toutes les routes renvoient vers index.html (application mono-page).
+# Le fichier public/_redirects fait la même chose ; ceci sert de filet.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# En-têtes de sécurité appliqués à toutes les pages.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    X-XSS-Protection = "1; mode=block"
+
+# Mise en cache longue des ressources versionnées (hash dans le nom).
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
